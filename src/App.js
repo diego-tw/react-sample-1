@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import "./App.css";
-import RefreshButton from "./RefreshButton";
+import RefreshButton from "./components/RefreshButton";
+import KeysList from "./components/KeysList";
+
 import logo from './logo.svg';
 
 
@@ -18,6 +20,7 @@ class App extends Component {
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
                 <RefreshButton faIcon="plus" label="Add a new thing"/>
+                <KeysList/>
             </div>
 
         );
