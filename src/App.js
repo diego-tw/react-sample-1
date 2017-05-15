@@ -2,8 +2,6 @@ import React, {Component} from "react";
 import "./App.css";
 import RefreshButton from "./RefreshButton";
 import logo from './logo.svg';
-import { Button, IconButton, HamburgerButton, FloatingButton, FlatButton } from 'react-buttons';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 
 class App extends Component {

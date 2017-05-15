@@ -1,20 +1,34 @@
-import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { Button } from 'react-buttons';
+import React, {Component} from 'react'
+import AlertContainer from 'react-alert'
 
 
-
-class RefreshButton extends React.Component {
+class RefreshButton extends Component {
 
     constructor(props) {
         super(props);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
-    render() {
+
+    alertOptions = {
+        offset: 14,
+        position: 'bottom left',
+        theme: 'dark',
+        time: 5000,
+        transition: 'scale'
+    }
+
+    showAlert = () => {
+        this.msg.show('Getting latest data...', {
+            time: 2000,
+            type: 'success'
+        })
+    }
+
+    render () {
         return (
             <div>
-                <Button faIcon="plus"  >New Thing</Button>
+                <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
+                <button onClick={this.showAlert}>Refresh</button>
             </div>
         )
     }
