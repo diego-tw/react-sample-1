@@ -46,15 +46,18 @@ const postsByReddit = (state = {}, action) => {
     }
 };
 
-const rootReducer = combineReducers({
-    postsByReddit,
-    selectedReddit
-});
-
 
 const diegoListHandler = (state, action) => {
     console.log("### Handling Diego list: putting into state");
     return state;
 };
+
+const rootReducer = combineReducers({
+    postsByReddit,
+    selectedReddit,
+    diegoListHandler
+});
+
+
 
 export default rootReducer

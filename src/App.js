@@ -43,7 +43,7 @@ class App extends Component {
     };
 
     render() {
-        const {selectedReddit, posts, isFetching, lastUpdated} = this.props;
+        const { posts, isFetching, lastUpdated} = this.props;
         const isEmpty = posts.length === 0;
         return (
 
