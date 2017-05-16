@@ -8,38 +8,29 @@ const selectedReddit = (state = 'reactjs', action) => {
         default:
             return state
     }
-}
+};
 
 const posts = (state = {
     isFetching: false,
-    didInvalidate: false,
     items: []
 }, action) => {
     switch (action.type) {
-        case INVALIDATE_REDDIT:
-            return {
-                ...state,
-                isFetching: false,
-                didInvalidate: true
-            }
         case REQUEST_POSTS:
             return {
                 ...state,
                 isFetching: true,
-                didInvalidate: false
             }
         case RECEIVE_POSTS:
             return {
                 ...state,
                 isFetching: false,
-                didInvalidate: false,
                 items: action.posts,
                 lastUpdated: action.receivedAt
-            }
+            };
         default:
             return state
     }
-}
+};
 
 const postsByReddit = (state = {}, action) => {
     switch (action.type) {
@@ -53,11 +44,17 @@ const postsByReddit = (state = {}, action) => {
         default:
             return state
     }
-}
+};
 
 const rootReducer = combineReducers({
     postsByReddit,
     selectedReddit
-})
+});
+
+
+const diegoListHandler = (state, action) => {
+    console.log("### Handling Diego list: putting into state");
+    return state;
+};
 
 export default rootReducer

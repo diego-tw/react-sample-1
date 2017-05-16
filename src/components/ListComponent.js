@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { selectReddit,  invalidateReddit } from '../actions/Actions'
-import Picker from '../components/Picker'
-import Posts from '../components/Posts'
+import Posts from './Posts'
 
-class App extends Component {
+class ListComponent extends Component {
   static propTypes = {
     selectedReddit: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import { invalidateReddit, fetchPosts, selectReddit} from "./actions/Actions";
+import {fetchDiegoList, invalidateReddit, fetchPosts, selectReddit} from "./actions/Actions";
 import Posts from "./components/Posts";
 import logo from "./logo.svg";
 
@@ -9,6 +9,7 @@ import logo from "./logo.svg";
 class App extends Component {
     static propTypes = {
         selectedReddit: PropTypes.string.isRequired,
+        diegoList: PropTypes.array.isRequired,
         posts: PropTypes.array.isRequired,
         isFetching: PropTypes.bool.isRequired,
         lastUpdated: PropTypes.number,
@@ -16,32 +17,34 @@ class App extends Component {
     }
 
     componentDidMount() {
-        const {dispatch, selectedReddit} = this.props
+        const {dispatch, selectedReddit} = this.props;
         dispatch(fetchPosts(selectedReddit))
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.selectedReddit !== this.props.selectedReddit) {
-            const {dispatch, selectedReddit} = nextProps
+            const {dispatch, selectedReddit} = nextProps;
             dispatch(fetchPosts(selectedReddit))
         }
     }
 
     handleChange = nextReddit => {
         this.props.dispatch(selectReddit(nextReddit))
-    }
+    };
 
     handleRefreshClick = e => {
-        e.preventDefault()
 
-        const {dispatch, selectedReddit} = this.props
-        dispatch(invalidateReddit(selectedReddit))
+        e.preventDefault();
+        const {dispatch, selectedReddit} = this.props;
+
+        dispatch(invalidateReddit(selectedReddit));
         dispatch(fetchPosts(selectedReddit))
-    }
+        dispatch(fetchDiegoList());
+    };
 
     render() {
-        const {selectedReddit, posts, isFetching, lastUpdated} = this.props
-        const isEmpty = posts.length === 0
+        const {selectedReddit, posts, isFetching, lastUpdated} = this.props;
+        const isEmpty = posts.length === 0;
         return (
 
 
@@ -80,7 +83,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    const {selectedReddit, postsByReddit} = state
+    const {selectedReddit, postsByReddit} = state;
     const {
         isFetching,
         lastUpdated,
@@ -88,7 +91,7 @@ const mapStateToProps = state => {
     } = postsByReddit[selectedReddit] || {
         isFetching: true,
         items: []
-    }
+    };
 
     return {
         selectedReddit,
