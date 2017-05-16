@@ -1,11 +1,8 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {fetchPostsIfNeeded, invalidateReddit, selectReddit} from "./actions";
-import Picker from "./components/Picker";
+import { invalidateReddit, fetchPosts, selectReddit} from "./actions/Actions";
 import Posts from "./components/Posts";
-import RefreshButton from "./components/RefreshButton";
-import KeysList from "./components/KeysList";
 import logo from "./logo.svg";
 
 
@@ -20,13 +17,13 @@ class App extends Component {
 
     componentDidMount() {
         const {dispatch, selectedReddit} = this.props
-        dispatch(fetchPostsIfNeeded(selectedReddit))
+        dispatch(fetchPosts(selectedReddit))
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.selectedReddit !== this.props.selectedReddit) {
             const {dispatch, selectedReddit} = nextProps
-            dispatch(fetchPostsIfNeeded(selectedReddit))
+            dispatch(fetchPosts(selectedReddit))
         }
     }
 
@@ -39,7 +36,7 @@ class App extends Component {
 
         const {dispatch, selectedReddit} = this.props
         dispatch(invalidateReddit(selectedReddit))
-        dispatch(fetchPostsIfNeeded(selectedReddit))
+        dispatch(fetchPosts(selectedReddit))
     }
 
     render() {
@@ -49,18 +46,20 @@ class App extends Component {
 
 
             <div className="App">
-                {/*<div className="App-header">*/}
-                    {/*<img src={logo} className="App-logo" alt="logo"/>*/}
-                    {/*<h2>Welcome to React</h2>*/}
-                {/*</div>*/}
+                <div className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" width={100}/>
+                    <h2>Welcome to React</h2>
+                </div>
                 <p className="App-intro">
-                    To get started, edit <code>src/App.js</code> and save to reload.
+                    Here'es a list...
                 </p>
-                {/*<RefreshButton faIcon="plus" label="Add a new thing"/>*/}
-                {/*<KeysList/>*/}
-                <Picker value={selectedReddit}
-                        onChange={this.handleChange}
-                        options={['reactjs', 'frontend']}/>
+
+                {isEmpty
+                    ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+                    : <div style={{opacity: isFetching ? 0.5 : 1}}>
+                        <Posts posts={posts}/>
+                    </div>
+                }
                 <p>
                     {lastUpdated &&
                     <span>
@@ -75,12 +74,6 @@ class App extends Component {
                     </a>
                     }
                 </p>
-                {isEmpty
-                    ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-                    : <div style={{opacity: isFetching ? 0.5 : 1}}>
-                        <Posts posts={posts}/>
-                    </div>
-                }
             </div>
         )
     }
